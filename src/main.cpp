@@ -9,9 +9,9 @@ Schedular sch;
 
 void setup() {
 	Serial.begin(9600);
-	sch.addTask(sch.REQUIRED, &update1Sec, 1, Chrono::SECONDS);
-	sch.addTask(sch.REQUIRED, &update500Millis, 500, Chrono::MILLIS);
-	sch.addTask(sch.REQUIRED, &updateUntimed);
+	sch.addTask(Schedular::REQUIRED, &update1Sec, 1, Chrono::SECONDS);
+	sch.addTask(Schedular::REQUIRED, &update500Millis, 500, Chrono::MILLIS);
+	sch.addTask(Schedular::REQUIRED, &updateUntimed);
 }
 
 void loop() {

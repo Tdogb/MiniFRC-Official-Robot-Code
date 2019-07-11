@@ -9,13 +9,15 @@
 class Schedular
 {
 private:
-    struct timedTask_s {
+    struct task_s {
+        String id; //Mabe change this to namespace or subclass?
         void (*ptr)();
+    };
+    struct timedTask_s : task_s {
         Chrono* timer;
         unsigned long updateFrequency;
     };
-    struct untimedTask_s {
-        void (*ptr)();
+    struct untimedTask_s : task_s {
     };
     std::vector<Schedular::timedTask_s> timedTasks;
     std::vector<untimedTask_s> untimedTasks;
@@ -28,7 +30,7 @@ public:
         TELEOP = 3
     };
     //TODO: Add ability to add task before another one
-    void addTask(type_e type, void (*ptr)(), long updateFrequency = 0, Chrono::Resolution timeQuantity = Chrono::MICROS);
+    void addTask(type_e type, void (*ptr)(), long updateFrequency = 0, Chrono::Resolution timeQuantity = Chrono::MICROS, task_s* insertBefore = NULL);
     void update();
 };
 
