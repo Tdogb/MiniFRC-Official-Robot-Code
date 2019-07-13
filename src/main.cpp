@@ -13,9 +13,7 @@ Superstructure superstructure;
 
 void setup() {
 	Serial.begin(9600);
-	// sch.addTask(Schedular::REQUIRED, &update1Sec, 1, Chrono::SECONDS);
-	// sch.addTask(Schedular::REQUIRED, &update500Millis, 500, Chrono::MILLIS);
-	// sch.addTask(Schedular::REQUIRED, &updateUntimed);
+	while(!Serial) {;}
 	sch.addTask("elevatorUpdate", &elevatorUpdate, REQUIRED, Chrono::MILLIS, 100);
 }
 

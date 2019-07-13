@@ -19,8 +19,8 @@ private:
 public:
     Elevator(/* args */);
     ~Elevator();
-    void setHeight(double height);
-    void setRotation(double rotation);
+    void setHeight(float height);
+    void setRotation(float rotation);
 };
 
 

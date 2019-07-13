@@ -23,13 +23,13 @@ Elevator::~Elevator()
 {
 }
 
-void Elevator::setHeight(double height) {
+void Elevator::setHeight(float height) {
     Serial.println("");
     Serial.print("Height set to: ");
     Serial.print(height);
 }
 
-void Elevator::setRotation(double rotation) {
+void Elevator::setRotation(float rotation) {
     Serial.println("");
     Serial.print("Rotation set to: ");
     Serial.print(rotation);

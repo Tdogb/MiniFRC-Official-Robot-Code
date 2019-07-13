@@ -15,18 +15,18 @@ enum manipulatorState_e {
 };
 
 struct ballTheta_s { //In radians without PI
-    double START = PI/2;
-    double NEUTRAL = 0;
-    double INTAKE = -PI/4;
-    double OUTTAKE = PI/4;
-    double OUTTAKE_HIGH = PI/3;
+    float START = PI/2;
+    float NEUTRAL = 0;
+    float INTAKE = -PI/4;
+    float OUTTAKE = PI/4;
+    float OUTTAKE_HIGH = PI/3;
 };
 
 struct hatchTheta_s {
-    double START = PI/2;
-    double NEUTRAL = 0;
-    double INTAKE = -PI/4;
-    double OUTTAKE = PI/4;
+    float START = PI/2;
+    float NEUTRAL = 0;
+    float INTAKE = -PI/4;
+    float OUTTAKE = PI/4;
 };
 
 struct superstructureState_s {
@@ -35,18 +35,18 @@ struct superstructureState_s {
 };
 
 struct elevatorState_s {
-    double theta;
-    double height;
+    float theta;
+    float height;
 };
 
 struct ballState_s {
     manipulatorState_e manipulatorState;
-    double ballTheta;
+    float ballTheta;
 };
 
 struct hatchState_s {
     manipulatorState_e manipulatorState;
-    double hatchTheta;
+    float hatchTheta;
 };
 
 
@@ -62,9 +62,10 @@ private:
     void commandElevatorState(elevatorState_s newElevatorState);
     void commandBallState(ballState_s newBallState);
     void commandHatchState(hatchState_s newHatchState);
+    int convertThetaToSteps(float theta);
 public:
     Superstructure(/* args */);
-    void setSuperstructureState(elevatorState_s newElevatorState, bool commanded = false);
+    void setSuperstructureState(elevatorState_s newElevatorState);
     void setSuperstructureState(ballState_s newBallState);
     void setSuperstructureState(hatchState_s newHatchState);
 };
