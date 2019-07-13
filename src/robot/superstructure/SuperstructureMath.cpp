@@ -15,7 +15,7 @@ namespace SuperstructureMath {
     };
     
     void setElevatorHeight(float height) {
-        for(size_t i = 0; i < ballGeometry.Cols - 1; i++) {
+        for(size_t i = 0; i < ballGeometry.Cols; i++) {
             ballGeometry(3,i) += height;
         }
     }

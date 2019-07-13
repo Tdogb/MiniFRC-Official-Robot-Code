@@ -8,13 +8,17 @@ void updateUntimed();
 void elevatorUpdate();
 
 Schedular sch;
-Superstructure superstructure;
+unsigned long pastMicros = 0;
+unsigned long currentMicros = 0;
+//Superstructure superstructure;
 
 
 void setup() {
 	Serial.begin(9600);
 	while(!Serial) {;}
-	sch.addTask("elevatorUpdate", &elevatorUpdate, REQUIRED, Chrono::MILLIS, 100);
+	sch.addTask("elevatorUpdate", &elevatorUpdate, REQUIRED, Chrono::SECONDS, 1);
+	sch.addTask("elevatorUpdate2", &update1Sec, REQUIRED, Chrono::SECONDS, 1);
+
 }
 
 void loop() {
@@ -22,13 +26,17 @@ void loop() {
 }
 
 void elevatorUpdate() {
-	superstructure.setSuperstructureState((elevatorState_s){1,2});
+	currentMicros = micros();
+	Serial.println(currentMicros-pastMicros);
+	pastMicros = currentMicros;
+	//Serial.println("Schedular working");
+	//superstructure.setSuperstructureState((elevatorState_s){1,2});
 }
 
 
-// void update1Sec() {
-// 	Serial.println("1");
-// }
+void update1Sec() {
+	//Serial.println("SEC");
+}
 
 // void update500Millis() {
 // 	Serial.println("0");

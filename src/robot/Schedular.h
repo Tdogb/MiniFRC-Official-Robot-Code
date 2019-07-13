@@ -12,7 +12,12 @@ class Schedular
 private:
     std::vector<timedTask_s> timedTasks;
     std::vector<untimedTask_s> untimedTasks;
-    std::vector<Chrono> timers;
+    struct timing_s {
+        Chrono timer;
+        long updateFrequency;
+        bool updated;
+    };
+    std::vector<timing_s> timers;
 public:
     Schedular();
 

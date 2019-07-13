@@ -16,9 +16,12 @@ struct task_s {
         type_e type;
         void (*ptr)();
 };
-struct timedTask_s : public task_s {
+struct timedTask_s {
     public:
-        Chrono* timer;
+        String id;
+        type_e type;
+        void (*ptr)();
+        int timerIndex;
         Chrono::Resolution timeQuantity;
         long updateFrequency;
 };
