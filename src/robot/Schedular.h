@@ -12,11 +12,12 @@ class Schedular
 private:
     std::vector<timedTask_s> timedTasks;
     std::vector<untimedTask_s> untimedTasks;
+    std::vector<Chrono> timers;
 public:
     Schedular();
 
     //TODO: Add ability to add task before another one
-    void addTask(timedTask_s task, String beforeTask = "");
+    void addTask(String id, void (*ptr)(), type_e type, Chrono::Resolution timeQuantity, long updateFrequency, String beforeTask = "");
     void addTask(untimedTask_s task, String beforeTask = "");
 
     void update();

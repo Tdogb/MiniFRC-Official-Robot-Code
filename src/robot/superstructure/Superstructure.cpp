@@ -10,13 +10,13 @@ Superstructure::Superstructure(/* args */)
     currentHatchState.hatchTheta = 0;
 }
 
-Superstructure::~Superstructure()
-{
-}
-
 void Superstructure::setSuperstructureState(elevatorState_s newState, bool commanded) {
     if(!commanded) {
-
+        //TEMP
+        bool collision = false;
+        if(!collision) {
+            commandElevatorState(newState);
+        }
     }
     else {
         commandElevatorState(newState);
@@ -37,7 +37,8 @@ void Superstructure::setSuperstructureState(hatchState_s newHatchState) {
 }
 
 void Superstructure::commandElevatorState(elevatorState_s newElevatorState) {
-
+    elevator.setHeight(newElevatorState.height);
+    elevator.setRotation(newElevatorState.theta);
 }
 
 void Superstructure::commandBallState(ballState_s newBallState) {

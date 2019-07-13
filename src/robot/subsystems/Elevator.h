@@ -10,6 +10,8 @@ setElevatorRotation --> only run by superstructure class
 #ifndef __ELEVATOR_H__
 #define __ELEVATOR_H__
 
+#include <TeensyStep.h>
+
 class Elevator
 {
 private:
@@ -17,6 +19,8 @@ private:
 public:
     Elevator(/* args */);
     ~Elevator();
+    void setHeight(double height);
+    void setRotation(double rotation);
 };
 
 

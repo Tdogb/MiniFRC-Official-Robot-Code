@@ -19,7 +19,8 @@ struct task_s {
 struct timedTask_s : public task_s {
     public:
         Chrono* timer;
-        unsigned long updateFrequency;
+        Chrono::Resolution timeQuantity;
+        long updateFrequency;
 };
 struct untimedTask_s : public task_s {
 };

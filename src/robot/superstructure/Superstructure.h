@@ -34,17 +34,17 @@ struct superstructureState_s {
 
 };
 
-struct elevatorState_s: public superstructureState_s {
+struct elevatorState_s {
     double theta;
     double height;
 };
 
-struct ballState_s: public superstructureState_s {
+struct ballState_s {
     manipulatorState_e manipulatorState;
     double ballTheta;
 };
 
-struct hatchState_s: public superstructureState_s {
+struct hatchState_s {
     manipulatorState_e manipulatorState;
     double hatchTheta;
 };
@@ -58,16 +58,15 @@ private:
     elevatorState_s currentElevatorState;
     ballState_s currentBallState;
     hatchState_s currentHatchState;
-public:
-    Superstructure(/* args */);
-    ~Superstructure();
-    void setSuperstructureState(elevatorState_s newElevatorState, bool commanded = false);
-    void setSuperstructureState(ballState_s newBallState);
-    void setSuperstructureState(hatchState_s newHatchState);
 
     void commandElevatorState(elevatorState_s newElevatorState);
     void commandBallState(ballState_s newBallState);
     void commandHatchState(hatchState_s newHatchState);
+public:
+    Superstructure(/* args */);
+    void setSuperstructureState(elevatorState_s newElevatorState, bool commanded = false);
+    void setSuperstructureState(ballState_s newBallState);
+    void setSuperstructureState(hatchState_s newHatchState);
 };
 
 

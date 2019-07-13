@@ -10,13 +10,5 @@ public:
     ~Mechanisms();
 };
 
-Mechanisms::Mechanisms(/* args */)
-{
-}
-
-Mechanisms::~Mechanisms()
-{
-}
-
 
 #endif // __MECHANISMS_H__

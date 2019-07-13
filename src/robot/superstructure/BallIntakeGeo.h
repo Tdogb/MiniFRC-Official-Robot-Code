@@ -1,4 +1,5 @@
-#include <vector>
+#ifndef __BALLINTAKEGEO_H__
+#define __BALLINTAKEGEO_H__
 namespace BallGeometry {
 
 double geo[][3] = {
@@ -46,7 +47,7 @@ double geo[][3] = {
 
 };
 
-static const double originalGeo[][3] = {
+const double originalGeo[][3] = {
 {
     60.219,
     64.648,
@@ -91,3 +92,5 @@ static const double originalGeo[][3] = {
 
 };
 }
+
+#endif // __BALLINTAKEGEO_H__
