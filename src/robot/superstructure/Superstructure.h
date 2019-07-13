@@ -6,14 +6,47 @@ Supersturcture.setElevatorHeight --> resolve collisions --> run subsystem
 #define __SUPERSTRUCTURE_H__
 #include "robot/subsystems/Elevator.h"
 #include "robot/subsystems/Mechanisms.h"
+#include <Arduino.h>
+
+enum manipulatorState_e {
+    OFF,
+    INTAKE,
+    OUTTAKE
+};
+
+struct ballTheta_s { //In radians without PI
+    double START = PI/2;
+    double NEUTRAL = 0;
+    double INTAKE = -PI/4;
+    double OUTTAKE = PI/4;
+    double OUTTAKE_HIGH = PI/3;
+};
+
+struct hatchTheta_s {
+    double START = PI/2;
+    double NEUTRAL = 0;
+    double INTAKE = -PI/4;
+    double OUTTAKE = PI/4;
+};
 
 struct superstructureState_s {
+    public:
+
 };
 
-struct elevatorState_s: superstructureState_s {
+struct elevatorState_s: public superstructureState_s {
+    double theta;
+    double height;
 };
 
-struct mechanismState_s: superstructureState_s {
+struct ballState_s: public superstructureState_s {
+    manipulatorState_e manipulatorState;
+    double ballTheta;
+};
+
+struct hatchState_s: public superstructureState_s {
+    manipulatorState_e manipulatorState;
+    double hatchTheta;
 };
 
 
@@ -22,10 +55,19 @@ class Superstructure
 private:
     Elevator elevator;
     Mechanisms mechanisms;
+    elevatorState_s currentElevatorState;
+    ballState_s currentBallState;
+    hatchState_s currentHatchState;
 public:
     Superstructure(/* args */);
     ~Superstructure();
-    void setSuperstructureState(superstructureState_s newState);
+    void setSuperstructureState(elevatorState_s newElevatorState, bool commanded = false);
+    void setSuperstructureState(ballState_s newBallState);
+    void setSuperstructureState(hatchState_s newHatchState);
+
+    void commandElevatorState(elevatorState_s newElevatorState);
+    void commandBallState(ballState_s newBallState);
+    void commandHatchState(hatchState_s newHatchState);
 };
 
 

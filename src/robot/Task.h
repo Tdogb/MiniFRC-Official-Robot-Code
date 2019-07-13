@@ -1,22 +1,27 @@
 #ifndef __TASK_H__
 #define __TASK_H__
+#include <Chrono.h>
+#include <Arduino.h>
 
-class Task
-{
-private:
-    /* data */
-public:
-    Task(/* args */);
-    ~Task();
+enum type_e {
+    REQUIRED = 0,
+    DEBUG = 1,
+    AUTO = 2,
+    TELEOP = 3
 };
 
-Task::Task(/* args */)
-{
-}
-
-Task::~Task()
-{
-}
-
+struct task_s {
+    public:
+        String id;
+        type_e type;
+        void (*ptr)();
+};
+struct timedTask_s : public task_s {
+    public:
+        Chrono* timer;
+        unsigned long updateFrequency;
+};
+struct untimedTask_s : public task_s {
+};
 
 #endif // __TASK_H__

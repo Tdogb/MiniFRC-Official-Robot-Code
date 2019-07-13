@@ -5,32 +5,20 @@
 #include <Arduino.h>
 #include <stdint.h>
 #include <cstdlib>
+#include "Task.h"
 
 class Schedular
 {
 private:
-    struct task_s {
-        String id; //Mabe change this to namespace or subclass?
-        void (*ptr)();
-    };
-    struct timedTask_s : task_s {
-        Chrono* timer;
-        unsigned long updateFrequency;
-    };
-    struct untimedTask_s : task_s {
-    };
-    std::vector<Schedular::timedTask_s> timedTasks;
+    std::vector<timedTask_s> timedTasks;
     std::vector<untimedTask_s> untimedTasks;
 public:
     Schedular();
-    enum type_e {
-        REQUIRED = 0,
-        DEBUG = 1,
-        AUTO = 2,
-        TELEOP = 3
-    };
+
     //TODO: Add ability to add task before another one
-    void addTask(type_e type, void (*ptr)(), long updateFrequency = 0, Chrono::Resolution timeQuantity = Chrono::MICROS, task_s* insertBefore = NULL);
+    void addTask(timedTask_s task, String beforeTask = "");
+    void addTask(untimedTask_s task, String beforeTask = "");
+
     void update();
 };
 

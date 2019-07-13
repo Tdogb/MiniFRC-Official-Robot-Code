@@ -5,13 +5,13 @@ Schedular::Schedular() {
 
 }
 
-void Schedular::addTask(type_e type, void (*ptr)(), long updateFrequency, Chrono::Resolution timeQuantity) {
-    if(updateFrequency != 0) {
-        timedTasks.push_back((timedTask_s){ptr, new Chrono(timeQuantity), updateFrequency});
-    }
-    else {
-        untimedTasks.push_back((untimedTask_s){ptr});
-    }
+void Schedular::addTask(timedTask_s task, String beforeTask) {
+    //timedTasks.push_back((timedTask_s){ptr, new Chrono(timeQuantity), updateFrequency});
+    timedTasks.push_back(task);
+}
+
+void Schedular::addTask(untimedTask_s task, String beforeTask) {
+    untimedTasks.push_back(task);
 }
 
 void Schedular::update() {
