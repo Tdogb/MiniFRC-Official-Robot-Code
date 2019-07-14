@@ -1,6 +1,7 @@
 #include "Superstructure.h"
 
-Superstructure::Superstructure(/* args */)
+Superstructure::Superstructure(Elevator &_elevator, Drivetrain &_drivetrain, Mechanisms &_mechanisms)
+:elevator(_elevator), drivetrain(_drivetrain), mechanisms(_mechanisms)
 {
     currentElevatorState.height = 0;
     currentElevatorState.theta = 0;

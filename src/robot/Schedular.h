@@ -22,8 +22,8 @@ public:
     Schedular();
 
     //TODO: Add ability to add task before another one
-    void addTask(String id, void (*ptr)(), type_e type, Chrono::Resolution timeQuantity, long updateFrequency, String beforeTask = "");
-    void addTask(untimedTask_s task, String beforeTask = "");
+    void addTimedTask(String id, void (*ptr)(), type_e type, Chrono::Resolution timeQuantity, long updateFrequency, String beforeTask = "");
+    void addUntimedTask(untimedTask_s task, String beforeTask = "");
 
     void update();
 };

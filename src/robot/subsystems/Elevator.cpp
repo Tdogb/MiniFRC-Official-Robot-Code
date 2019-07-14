@@ -3,14 +3,16 @@ Move the steppers here
 */
 #include "Elevator.h"
 #include "robot/defs.h"
+#include <Arduino.h>
 
-Stepper rotationStepper(ROTATION_STEP_PIN, ROTATION_DIR_PIN); //step pin, dir pin
-Stepper leadscrewStepper(LEADSCREW_STEP_PIN,LEADSCREW_DIR_PIN);
-StepControl rotationController;
-StepControl leadscrewController;
+// Stepper rotationStepper(ROTATION_STEP_PIN, ROTATION_DIR_PIN); //step pin, dir pin
+// Stepper leadscrewStepper(LEADSCREW_STEP_PIN,LEADSCREW_DIR_PIN);
 
-Elevator::Elevator(/* args */)
+
+Elevator::Elevator(Stepper &_leadscrewStepper, Stepper &_rotationStepper)
+:leadscrewStepper(_leadscrewStepper), rotationStepper(_rotationStepper)
 {
+
     rotationStepper.setAcceleration(4000);
     rotationStepper.setMaxSpeed(25000);
     leadscrewStepper.setAcceleration(30000);
@@ -19,7 +21,7 @@ Elevator::Elevator(/* args */)
     leadscrewStepper.setTargetAbs(0);
 }
 
-Elevator::~Elevator()
+Elevator::~Elevator() 
 {
 }
 

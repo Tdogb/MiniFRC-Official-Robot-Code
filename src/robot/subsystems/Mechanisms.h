@@ -6,7 +6,7 @@ class Mechanisms
 private:
     /* data */
 public:
-    Mechanisms(/* args */);
+    Mechanisms(int i);
     ~Mechanisms();
 };
 

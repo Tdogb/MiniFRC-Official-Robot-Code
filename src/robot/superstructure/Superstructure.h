@@ -6,6 +6,7 @@ Supersturcture.setElevatorHeight --> resolve collisions --> run subsystem
 #define __SUPERSTRUCTURE_H__
 #include "robot/subsystems/Elevator.h"
 #include "robot/subsystems/Mechanisms.h"
+#include "robot/subsystems/Drivetrain.h"
 #include <Arduino.h>
 
 enum manipulatorState_e {
@@ -52,9 +53,15 @@ struct hatchState_s {
 
 class Superstructure
 {
+public:
+    Superstructure(Elevator &_elevator, Drivetrain &_drivetrain, Mechanisms &_mechanisms);
+    void setSuperstructureState(elevatorState_s newElevatorState);
+    void setSuperstructureState(ballState_s newBallState);
+    void setSuperstructureState(hatchState_s newHatchState);
 private:
-    Elevator elevator;
-    Mechanisms mechanisms;
+    Elevator &elevator;
+    Drivetrain &drivetrain;
+    Mechanisms &mechanisms;
     elevatorState_s currentElevatorState;
     ballState_s currentBallState;
     hatchState_s currentHatchState;
@@ -63,11 +70,7 @@ private:
     void commandBallState(ballState_s newBallState);
     void commandHatchState(hatchState_s newHatchState);
     int convertThetaToSteps(float theta);
-public:
-    Superstructure(/* args */);
-    void setSuperstructureState(elevatorState_s newElevatorState);
-    void setSuperstructureState(ballState_s newBallState);
-    void setSuperstructureState(hatchState_s newHatchState);
+
 };
 
 

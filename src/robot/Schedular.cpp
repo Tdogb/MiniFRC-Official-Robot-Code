@@ -5,7 +5,7 @@ Schedular::Schedular() {
 
 }
 
-void Schedular::addTask(String id, void (*ptr)(), type_e type, Chrono::Resolution timeQuantity, long updateFrequency, String beforeTask) {
+void Schedular::addTimedTask(String id, void (*ptr)(), type_e type, Chrono::Resolution timeQuantity, long updateFrequency, String beforeTask) {
     int timerIndex = -1;
     int insertAtIndex = -1;
     for(size_t i = 0; i < timedTasks.size(); i++) {
@@ -31,15 +31,14 @@ void Schedular::addTask(String id, void (*ptr)(), type_e type, Chrono::Resolutio
     }
 }
 
-void Schedular::addTask(untimedTask_s task, String beforeTask) {
+void Schedular::addUntimedTask(untimedTask_s task, String beforeTask) {
     untimedTasks.push_back(task);
 }
 
 void Schedular::update() {
-    for(untimedTask_s task : untimedTasks) {
-        task.ptr();
+    for(size_t i = 0; i < untimedTasks.size(); i++) {
+        untimedTasks[i].ptr();
     }
-
     for(size_t i = 0; i < timers.size(); i++) {
         timers[i].updated = false;
         if(timers[i].timer.hasPassed(timers[i].updateFrequency, true)) {
@@ -51,25 +50,6 @@ void Schedular::update() {
             timedTasks[i].ptr();
         }
     }
-
-    // for(auto task : timedTasks) {
-    //     if(!(timers[task.timerIndex].isRunning())) {
-    //         task.ptr();
-    //         timers[task.timerIndex].stop();
-    //     }
-    //     else if(timers[task.timerIndex].hasPassed(task.updateFrequency)){
-    //         task.ptr();
-    //         timers[task.timerIndex].stop();
-    //     }
-    // }
-    if(timers.size() != 1) {
-        Serial.print("ERROR");
-        delay(500);
-    }
-    
-    // for(size_t i = 0; i < timers.size(); i++) {
-    //     timers[i].start();
-    // }
 }
 
 /*

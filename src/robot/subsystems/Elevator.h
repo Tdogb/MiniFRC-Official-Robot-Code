@@ -15,9 +15,12 @@ setElevatorRotation --> only run by superstructure class
 class Elevator
 {
 private:
-    /* data */
+    Stepper &leadscrewStepper;
+    Stepper &rotationStepper;
+    StepControl rotationController;
+    StepControl leadscrewController;
 public:
-    Elevator(/* args */);
+    Elevator(Stepper &_leadscrewStepper, Stepper &_rotationStepper);
     ~Elevator();
     void setHeight(float height);
     void setRotation(float rotation);
