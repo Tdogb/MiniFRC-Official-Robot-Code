@@ -6,6 +6,7 @@
 #include "robot/subsystems/Elevator.h"
 #include "robot/subsystems/Mechanisms.h"
 #include "robot/defs.h"
+#include "robot/superstructure/SuperstructureMath.h"
 
 void elevatorUpdate();
 
@@ -18,6 +19,7 @@ Mechanisms mechanisms(1);
 
 Superstructure superstructure(elevator,drivetrain,mechanisms);
 Schedular sch;
+SuperstructureMath ss;
 
 void setup() {
 	Serial.begin(9600);
@@ -31,4 +33,6 @@ void loop() {
 
 void elevatorUpdate() {
 	//superstructure.setSuperstructureState((elevatorState_s){1,2});
+	//ss.calculateElevatorRotation((float)(PI/2));
+	ss.calculateMechanismRotation((float)PI/2);
 }
