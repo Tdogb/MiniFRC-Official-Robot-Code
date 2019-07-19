@@ -23,7 +23,7 @@ public:
 
     //TODO: Add ability to add task before another one
     void addTimedTask(String id, void (*ptr)(), type_e type, Chrono::Resolution timeQuantity, long updateFrequency, String beforeTask = "");
-    void addUntimedTask(untimedTask_s task, String beforeTask = "");
+    void addUntimedTask(String id, void (*ptr)(), type_e type, String beforeTask = "");
 
     void update();
 };

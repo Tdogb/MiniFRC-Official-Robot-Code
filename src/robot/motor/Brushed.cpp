@@ -1,12 +1,12 @@
 #include "Brushed.h"
 #include <Arduino.h>
 
-Brushed::Brushed(const int _FWDPin, const int _RVSPin, const int _enPin, const bool _enPinMode)
+Brushed::Brushed(const int _FWDPin, const int _RVSPin, const int _enPin, Encoder &_encoder)
+:encoder(_encoder)
 {
     FWDPin = _FWDPin;
     RVSPin = _RVSPin;
     enPin = _enPin;
-    enPinMode = _enPinMode;
     pinMode(FWDPin, OUTPUT);
     pinMode(RVSPin, OUTPUT);
     pinMode(enPin, OUTPUT);
@@ -19,6 +19,7 @@ Brushed::Brushed(const int _FWDPin, const int _RVSPin, const int _enPin, const b
         analogWriteFrequency(RVSPin, 600);
         digitalWrite(enPin, HIGH);
     }
+    Serial.println("Brushed object created");
 }
 
 Brushed::~Brushed()

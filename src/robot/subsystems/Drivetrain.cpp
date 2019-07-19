@@ -1,9 +1,14 @@
 #include "Drivetrain.h"
 
-Drivetrain::Drivetrain(int i)
+Drivetrain::Drivetrain(Brushed &_leftMotor, Brushed &_rightMotor)
+:leftMotor(_leftMotor), rightMotor(_rightMotor)
 {
+
 }
 
 Drivetrain::~Drivetrain()
 {
+}
+
+void Drivetrain::update() {
 }

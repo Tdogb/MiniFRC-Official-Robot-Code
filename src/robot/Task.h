@@ -10,7 +10,7 @@ enum type_e {
     TELEOP = 3
 };
 
-struct task_s {
+struct untimedTask_s {
     public:
         String id;
         type_e type;
@@ -25,7 +25,6 @@ struct timedTask_s {
         Chrono::Resolution timeQuantity;
         long updateFrequency;
 };
-struct untimedTask_s : public task_s {
-};
+
 
 #endif // __TASK_H__

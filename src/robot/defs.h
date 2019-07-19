@@ -1,4 +1,5 @@
 #define WHEEL_DIA 0.051
+#define WHEELBASE_RADIUS 0.048
 
 #define X_BUTTON 1
 #define TRI_BUTTON 3

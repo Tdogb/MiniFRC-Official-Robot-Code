@@ -31,8 +31,8 @@ void Schedular::addTimedTask(String id, void (*ptr)(), type_e type, Chrono::Reso
     }
 }
 
-void Schedular::addUntimedTask(untimedTask_s task, String beforeTask) {
-    untimedTasks.push_back(task);
+void Schedular::addUntimedTask(String id, void (*ptr)(), type_e type, String beforeTask) {
+    untimedTasks.push_back({id, type, ptr});
 }
 
 void Schedular::update() {
