@@ -13,11 +13,11 @@ private:
         Vector2D position;
         Vector2D tangent;
     };
-    std::vector<Point> path = {
-        {0,0,1,0},
-        {1,1,0.5,0.5},
-        {2,3,1,0}
-    };
+    // std::vector<Point> path = {
+    //     {0,0,1,0},
+    //     {1,1,0.5,0.5},
+    //     {2,3,1,0}
+    // };
     std::vector<Spline> splines;
 public:
     PathGenerator(/* args */);

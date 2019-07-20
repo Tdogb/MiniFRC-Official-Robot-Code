@@ -7,49 +7,7 @@ Supersturcture.setElevatorHeight --> resolve collisions --> run subsystem
 #include "robot/subsystems/Elevator.h"
 #include "robot/subsystems/Mechanisms.h"
 #include "robot/subsystems/Drivetrain.h"
-#include <Arduino.h>
-
-enum manipulatorState_e {
-    OFF,
-    INTAKE,
-    OUTTAKE
-};
-
-struct ballTheta_s { //In radians without PI
-    float START = PI/2;
-    float NEUTRAL = 0;
-    float INTAKE = -PI/4;
-    float OUTTAKE = PI/4;
-    float OUTTAKE_HIGH = PI/3;
-};
-
-struct hatchTheta_s {
-    float START = PI/2;
-    float NEUTRAL = 0;
-    float INTAKE = -PI/4;
-    float OUTTAKE = PI/4;
-};
-
-struct superstructureState_s {
-    public:
-
-};
-
-struct elevatorState_s {
-    float theta;
-    float height;
-};
-
-struct ballState_s {
-    manipulatorState_e manipulatorState;
-    float ballTheta;
-};
-
-struct hatchState_s {
-    manipulatorState_e manipulatorState;
-    float hatchTheta;
-};
-
+#include "States.hpp"
 
 class Superstructure
 {
@@ -58,6 +16,7 @@ public:
     void setSuperstructureState(elevatorState_s newElevatorState);
     void setSuperstructureState(ballState_s newBallState);
     void setSuperstructureState(hatchState_s newHatchState);
+    void setDrivetrainState(drivetrainState_s newState);
 private:
     Elevator &elevator;
     Drivetrain &drivetrain;
@@ -65,6 +24,7 @@ private:
     elevatorState_s currentElevatorState;
     ballState_s currentBallState;
     hatchState_s currentHatchState;
+    drivetrainState_s currentDrivetrainState;
 
     void commandElevatorState(elevatorState_s newElevatorState);
     void commandBallState(ballState_s newBallState);

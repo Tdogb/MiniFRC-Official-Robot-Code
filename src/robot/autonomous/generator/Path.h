@@ -1,13 +1,7 @@
-// #ifndef __Path_H__
-// #define __Path_H__
-// #include <vector>
-// #include "robot/autonomous/Vector2D.h"
+// #ifndef __PATH_H__
+// #define __PATH_H__
+// #include <BasicLinearAlgebra.h>
 
-// #define path_x path[0]
-// #define path_y path[1]
-// #define userTan_x path[3]
-// #define userTan_y path[4]
+// BLA::Matrix<2,2> path;
 
-
-
-// #endif // __Path_H__
+// #endif // __PATH_H__

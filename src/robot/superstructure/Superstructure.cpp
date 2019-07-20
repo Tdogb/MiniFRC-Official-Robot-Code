@@ -49,3 +49,7 @@ void Superstructure::commandHatchState(hatchState_s newHatchState) {
 int Superstructure::convertThetaToSteps(float theta) {
     return 0;
 }
+
+void Superstructure::setDrivetrainState(drivetrainState_s newState) {
+    drivetrain.setVelocityState(currentDrivetrainState);
+}

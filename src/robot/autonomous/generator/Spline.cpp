@@ -1,23 +1,26 @@
 #include "Spline.h"
+Matrix<2,4> splineMatrix;
+Matrix<2,4> firstDerivative;
+Matrix<2,4> secondDerivative;
+RefMatrix<1,4,Array<2,4>> xRefMat(splineMatrix.Submatrix(Slice<0,1>(),Slice<0,4>()));
+RefMatrix<1,4,Array<2,4>> yRefMat(splineMatrix.Submatrix(Slice<1,2>(),Slice<0,4>()));
+
+RefMatrix<1,4,Array<2,4>> xRef1Mat(firstDerivative.Submatrix(Slice<0,1>(),Slice<0,4>()));
+RefMatrix<1,4,Array<2,4>> yRef1Mat(firstDerivative.Submatrix(Slice<1,2>(),Slice<0,4>()));
+
+RefMatrix<1,4,Array<2,4>> xRef2Mat(secondDerivative.Submatrix(Slice<0,1>(),Slice<0,4>()));
+RefMatrix<1,4,Array<2,4>> yRef2Mat(secondDerivative.Submatrix(Slice<1,2>(),Slice<0,4>()));
 
 Spline::Spline(Matrix<2,1> &_p0, Matrix<2,1> &_p1, Matrix<2,1> t0, Matrix<2,1> t1)
 :p0(_p0),p1(_p1)
 {
-    xRefMat = new RefMatrix<1,4,Array<2,4>>(splineMatrix.Submatrix(Slice<0,0>(),Slice<0,3>()));
-    yRefMat = new RefMatrix<1,4,Array<2,4>>(splineMatrix.Submatrix(Slice<1,1>(),Slice<0,3>()));
-
-    xRef1Mat = new RefMatrix<1,4,Array<2,4>>(firstDerivative.Submatrix(Slice<0,0>(),Slice<0,3>()));
-    yRef1Mat = new RefMatrix<1,4,Array<2,4>>(firstDerivative.Submatrix(Slice<1,1>(),Slice<0,3>()));
-
-    xRef2Mat = new RefMatrix<1,4,Array<2,4>>(secondDerivative.Submatrix(Slice<0,0>(),Slice<0,3>()));
-    yRef2Mat = new RefMatrix<1,4,Array<2,4>>(secondDerivative.Submatrix(Slice<1,1>(),Slice<0,3>()));
     Matrix<4,4> basisMatrix = {
        2,  -2,  1,  1,
       -3,   3, -2, -1,
        0,   0,  1,  0,
        1,   0,  0,  0
     };
-    Matrix<4,2> controlMatrix = (~p0)&&(~p1)&&(~t0)&&(~t1);
+    Matrix<4,2> controlMatrix = ((~p0)&&(~p1))&&((~t0)&&(~t1));
     // = {
     //     p0.x,   p0.y,
     //     p1.x,   p1.y,
@@ -27,30 +30,36 @@ Spline::Spline(Matrix<2,1> &_p0, Matrix<2,1> &_p1, Matrix<2,1> t0, Matrix<2,1> t
     Matrix<4,2> pretransposedSplineMatrix;
     Multiply(basisMatrix,controlMatrix,pretransposedSplineMatrix);
     splineMatrix = ~pretransposedSplineMatrix;
-
     //Derivatives
-    Matrix<4,1> firstDerivativeCoef = {
+    float firstDerivativeCoef[] = {
          3,
          2,
          1,
          0
     };
-    Matrix<4,1> secondDerivativeCoef = {
+    float secondDerivativeCoef[] = {
         2,
         1,
         0,
         0
     };
-    Matrix<1,4> tempXFirstDerivMat;
-    Matrix<1,4> tempYFirstDerivMat;
-    Matrix<1,4> tempXSecondDerivMat;
-    Matrix<1,4> tempYSecondDerivMat;
-    tempXFirstDerivMat = firstDerivativeCoef * (*xRefMat);
-    tempYFirstDerivMat = firstDerivativeCoef * (*yRefMat);
-    tempXSecondDerivMat = secondDerivativeCoef * tempXFirstDerivMat;
-    tempYSecondDerivMat = secondDerivativeCoef * tempYFirstDerivMat;
-    firstDerivative = tempXFirstDerivMat && tempYFirstDerivMat;
-    secondDerivative = tempXSecondDerivMat && tempYSecondDerivMat;
+    // Matrix<1,4> tempXFirstDerivMat;
+    // Matrix<1,4> tempYFirstDerivMat;
+    // Matrix<1,4> tempXSecondDerivMat;
+    // Matrix<1,4> tempYSecondDerivMat;
+    for(int i = 0; i < 4; i++) {
+        firstDerivative(0,i) *= firstDerivativeCoef[i];
+        firstDerivative(1,i) *= firstDerivativeCoef[i];
+
+        secondDerivative(0,i) *= secondDerivativeCoef[i];
+        secondDerivative(1,i) *= secondDerivativeCoef[i];
+    }
+    // tempXFirstDerivMat = ~(firstDerivativeCoef * xRefMat);//4x1 * 1x4
+    // tempYFirstDerivMat = firstDerivativeCoef * yRefMat;
+    // tempXSecondDerivMat = secondDerivativeCoef * tempXFirstDerivMat;
+    // tempYSecondDerivMat = secondDerivativeCoef * tempYFirstDerivMat;
+    // firstDerivative = tempXFirstDerivMat && tempYFirstDerivMat; //Woudnt this create a 8x1 matrix?
+    // secondDerivative = tempXSecondDerivMat && tempYSecondDerivMat;
 
     /* Calculate arclength */
 
@@ -69,42 +78,42 @@ std::vector<Matrix<2,1>> Spline::getPointsAtArclength(float arclengthStep) {
 
         }
     }
+    return output;
 }
 
 Matrix<2,1> Spline::getNthDerivative(derivativeOrder_e derivativeOrder, Matrix<2,1> point) {
     Matrix<2,1> output;
+    Matrix<1,4> pointXMatrix;
+    Matrix<1,4> pointYMatrix;
+
     switch(derivativeOrder) {
         case ZERO:
-            Matrix<1,4> pointXMatrix = {
+            pointXMatrix = {
                 powf(point(0),3),   powf(point(0),2),   point(0),   1
             };
-            Matrix<1,4> pointYMatrix = {
+            pointYMatrix = {
                 powf(point(1),3),   powf(point(1),2),   point(1),   1
             };
-            output = (pointXMatrix * ~(*xRefMat))&&(pointYMatrix * ~(*yRefMat));
-        break;
+            output = (pointXMatrix * ~xRefMat)&&(pointYMatrix * ~yRefMat);
+            break;
         case FIRST:
-            Matrix<1,4> pointXMatrix = {
+            pointXMatrix = {
                 powf(point(0),2),   point(0),   1,   0
             };
-            Matrix<1,4> pointYMatrix = {
+            pointYMatrix = {
                 powf(point(1),2),   point(1),   1,   0
             };
-            output = (pointXMatrix * ~(*xRef1Mat))&&(pointYMatrix * ~(*yRef1Mat));
-        break;
+            output = (pointXMatrix * ~xRef1Mat)&&(pointYMatrix * ~yRef1Mat);
+            break;
         case SECOND:
-            Matrix<1,4> pointXMatrix = {
+            pointXMatrix = {
                 point(0),   1,   0,   0
             };
-            Matrix<1,4> pointYMatrix = {
+            pointYMatrix = {
                 point(1),   1,   0,   0
             };
-            output = (pointXMatrix * ~(*xRef2Mat))&&(pointYMatrix * ~(*yRef2Mat));
-        break;
+            output = (pointXMatrix * ~xRef2Mat)&&(pointYMatrix * ~yRef2Mat);
+            break;
     }
     return output;
-}
-
-float integrate() {
-
 }
