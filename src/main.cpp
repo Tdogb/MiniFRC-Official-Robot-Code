@@ -55,7 +55,7 @@ void debugUntimedUpdate() {
 }
 
 void followerUpdate() {
-    follower.updatePosition();
+    follower.update();
 }
 
 void encoderUpdate() {
