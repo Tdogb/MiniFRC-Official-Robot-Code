@@ -1,5 +1,6 @@
 #define WHEEL_DIA 0.051
-#define WHEELBASE_RADIUS 0.048
+#define WHEELBASE_RADIUS 0.101
+#define WHEELBASE_DIA 0.202
 
 #define X_BUTTON 1
 #define TRI_BUTTON 3
@@ -35,6 +36,8 @@
 #define ML 4
 
 //Pins
+#define LED_PIN 13
+
 #define ROTATION_STEP_PIN 11
 #define ROTATION_DIR_PIN 12
 #define LEADSCREW_STEP_PIN 29
@@ -48,7 +51,10 @@
 #define L_MOTOR_RVS 4
 #define L_MOTOR_EN 2
 
-#define R_ENC_A 9
-#define R_ENC_B 10
-#define L_ENC_A 25
-#define L_ENC_B 26
+#define L_ENC_A 9
+#define L_ENC_B 10
+#define R_ENC_A 25
+#define R_ENC_B 26
+
+#define L_ENC_ALT 8 
+#define R_ENC_ALT 27

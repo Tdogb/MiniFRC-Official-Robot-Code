@@ -31,7 +31,6 @@ int iterator = 0;
 int8_t garbage = 0;
 bool startFound = false;
 void RobotSerial::update() {
-    // while(!Serial) {}
     if(SERIALPORT.available() > 0) {
         if(startFound) {
             if(iterator == 7) {
@@ -41,14 +40,9 @@ void RobotSerial::update() {
                 iterator = 0;
             }
             else {
-                //TEMP HOPEFULLY
-                //packet[iterator + 1] = SERIALPORT.read();
-                //packet[0] = garbage;
-
                 packet[iterator] = SERIALPORT.read();
                 iterator++;
             }
-            
         }
         else {
             int8_t in = SERIALPORT.read();
@@ -57,24 +51,6 @@ void RobotSerial::update() {
             }
         }
         if(updateData) {
-                // Serial.println("");
-                // Serial.print(packet[0]);
-                // Serial.print(" ");
-                // Serial.print(packet[1]);
-                // Serial.print(" ");
-                // Serial.print(packet[2]);
-                // Serial.print(" ");
-                // Serial.print(packet[3]);
-                // Serial.print(" ");
-                // Serial.print(packet[4]);
-                // Serial.print(" ");
-                // Serial.print(packet[5]);
-                // Serial.print(" ");
-                // Serial.print(packet[6]);
-                // Serial.print(" ");
-                // Serial.print(packet[7]);
-
-            //if(packet[sizeof(packet)-1] == 127) { //usually 127
                 xLAxis = packet[0];
                 yLAxis = packet[1];
                 yRAxis = packet[2];
@@ -90,33 +66,11 @@ void RobotSerial::update() {
                 buttons[R2] = bitRead(packet[5], 3);
 
                 buttons[DPAD_UP] = (packet[6] == 1);
-                //if(packet[6] == 1) {Serial.println("debug");}
                 buttons[DPAD_RIGHT] = (packet[6] == 2);
                 buttons[DPAD_DOWN] = (packet[6] == 3);
                 buttons[DPAD_LEFT] = (packet[6] == 4);
                 newData = true;
-
-                // Serial.println("");
-                // Serial.print(packet[6]);
-                // Serial.print(" ");
-                // Serial.print(buttons[DPAD_UP]);
-                // Serial.print(" ");
-                // Serial.print(buttons[DPAD_DOWN]);
-                // Serial.print(" ");
-                // Serial.print(buttons[DPAD_LEFT]);
-                // Serial.print(" ");
-                // Serial.print(buttons[DPAD_RIGHT]);
-
-                // Serial.println("");
-                // Serial.print("Throttle: ");
-                // Serial.print(yLAxis);
-                // Serial.print(" Turn: ");
-                // Serial.print(xRAxis);
                 updateData = false;
-            // }
-            // else {
-            //     //startFound = false;
-            // }
         }
     }
 }

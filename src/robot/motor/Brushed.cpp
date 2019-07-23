@@ -38,6 +38,9 @@ void Brushed::commandVoltage(float VoltageMV) {
 }
 
 void Brushed::pidStep() {
+    // Serial.println("");
+    // Serial.print("From Brushed class ");
+    // Serial.print(encoderVelocity);
     commandVoltage(pid.step(velocitySetpoint, encoderVelocity));
 }
 
