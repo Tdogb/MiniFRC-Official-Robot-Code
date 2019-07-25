@@ -15,13 +15,19 @@ using namespace BLA;
 class Follower
 {
 private:
-    Matrix<6,2> path = {
+/*
+Curved Path:
         0,0,
         0.09,0.215,
         0.246,0.39,
         0.43,0.5,
         0.58,0.645,
         0.656,0.83
+ */
+    Matrix<3,2> path = {
+        0,0,
+        0,0.2,
+        0,0.35
     };
     Superstructure &superstructure;
     Matrix<2,1> robotPosition = {0,0};
