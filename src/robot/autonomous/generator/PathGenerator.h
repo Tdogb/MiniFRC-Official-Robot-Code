@@ -3,24 +3,25 @@
 #include <vector>
 #include "Spline.h"
 #include <cstddef>
-#include "robot/autonomous/Vector2D.h"
+#include <BasicLinearAlgebra.h>
+
+using namespace BLA;
+
+#define PATHGEN_MAT_COLS 2
 
 class PathGenerator
 {
 private:
-    struct Point
-    {
-        Vector2D position;
-        Vector2D tangent;
-    };
     // std::vector<Point> path = {
     //     {0,0,1,0},
     //     {1,1,0.5,0.5},
     //     {2,3,1,0}
     // };
+    std::vector<Matrix<2,1>> &pathPoints;
+    std::vector<Matrix<2,1>> &pathTangents;
     std::vector<Spline> splines;
 public:
-    PathGenerator(/* args */);
+    PathGenerator(std::vector<Matrix<2,1>> &_pathPoints, std::vector<Matrix<2,1>> &_pathTangents);
     ~PathGenerator();
     void generate();
 };

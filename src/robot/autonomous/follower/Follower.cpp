@@ -1,4 +1,5 @@
 #include "Follower.h"
+#include "robot/autonomous/generator/PathGenerator.h"
 
 #define leftDeltaPosition realDeltaPositions[0]
 #define rightDeltaPosition realDeltaPositions[1]
@@ -6,6 +7,17 @@
 Follower::Follower(Superstructure &_superstructure)
 :superstructure(_superstructure)
 {
+    std::vector<Matrix<2,1>> testPath;
+    std::vector<Matrix<2,1>> testTangents;
+    Matrix<2,1> p0 = {0,0};
+    Matrix<2,1> p1 = {0.1,0.1};
+    Matrix<2,1> t0 = {0.1,0};
+    Matrix<2,1> t1 = {0.1,0};
+    testPath.push_back(p0);
+    testPath.push_back(p1);
+    testTangents.push_back(t0);
+    testTangents.push_back(t1);
+    PathGenerator pathGenerator(testPath,testTangents);
     path = {
         0.2,-0.2,
         0.43,0.5

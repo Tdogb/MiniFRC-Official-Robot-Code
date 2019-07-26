@@ -104,6 +104,5 @@ void SuperstructureMath::printMatrix(BLA::Matrix<3,3> *mat) {
 
 void detectCollision() {
     for(int i = 0; i < BallGeometry.GetRowCount(); i++) {
-
     }
 }

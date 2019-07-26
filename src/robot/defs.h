@@ -37,6 +37,30 @@
 
 //Pins
 #define LED_PIN 13
+#define PCB
+#ifdef PCB
+#define ROTATION_STEP_PIN 6
+#define ROTATION_DIR_PIN 8
+#define LEADSCREW_STEP_PIN 7
+#define LEADSCREW_DIR_PIN 9
+
+#define R_MOTOR_FWD 5
+#define R_MOTOR_RVS 4
+#define R_MOTOR_EN 22
+
+#define L_MOTOR_FWD 2
+#define L_MOTOR_RVS 3
+#define L_MOTOR_EN 23
+
+#define L_ENC_A 26
+#define L_ENC_B 27
+#define R_ENC_A 24
+#define R_ENC_B 25
+
+#define L_ENC_ALT 28 
+#define R_ENC_ALT 29
+
+#else
 
 #define ROTATION_STEP_PIN 11
 #define ROTATION_DIR_PIN 12
@@ -58,3 +82,5 @@
 
 #define L_ENC_ALT 8 
 #define R_ENC_ALT 27
+
+#endif

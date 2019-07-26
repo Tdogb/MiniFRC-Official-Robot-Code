@@ -74,8 +74,7 @@ void loop() {
 }
 
 void debugTimedUpdate() {
-    follower.printPosition();
-    //Serial << encoderVelocities[1] << '\n';
+    //follower.printPosition();
 }
 
 void debugUntimedUpdate() {
