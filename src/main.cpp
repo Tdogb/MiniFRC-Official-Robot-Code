@@ -18,6 +18,7 @@ void encoderPositionUpdate();
 void encoderVelocityUpdate();
 void followerUpdate();
 void pidUpdate();
+void subsystemsUpdate();
 void ISR_ROUTINE_L();
 void ISR_ROUTINE_R();
 
@@ -44,7 +45,7 @@ Brushed rightMotor(R_MOTOR_FWD, R_MOTOR_RVS, R_MOTOR_EN, rightEncoder, encoderVe
 
 Elevator elevator(leadscrewStepper, rotationStepper);
 Drivetrain drivetrain(leftMotor, rightMotor);
-Mechanisms mechanisms(1);
+Mechanisms mechanisms{};
 
 Superstructure superstructure(elevator,drivetrain,mechanisms);
 Schedular sch;
@@ -62,6 +63,7 @@ void setup() {
 	while(!Serial) {;}
 
     sch.addUntimedTask("encoderPositionUpdate", &encoderPositionUpdate, REQUIRED);
+    sch.addUntimedTask("subsystemsUpdate", &subsystemsUpdate, REQUIRED);
     sch.addTimedTask("encoderVelocityUpdate", &encoderVelocityUpdate, REQUIRED, Chrono::MICROS, 50);
     sch.addTimedTask("follwerupdate", &followerUpdate, AUTO, Chrono::MILLIS, 200); //Should be 10 millis
     sch.addTimedTask("pidUpdate", &pidUpdate, REQUIRED, Chrono::MICROS, 100);
@@ -93,6 +95,12 @@ void encoderVelocityUpdate() {
 void pidUpdate() {
     leftMotor.pidStep();
     rightMotor.pidStep();
+
+}
+
+void subsystemsUpdate() {
+    drivetrain.update();
+    elevator.update();
 }
 
 void followerUpdate() {

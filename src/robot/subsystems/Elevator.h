@@ -19,11 +19,31 @@ private:
     Stepper &rotationStepper;
     StepControl rotationController;
     StepControl leadscrewController;
+
+    enum conversionName_e {
+        STEPS,
+        ACTUAL
+    };
+    enum stepper_e {
+        LEADSCREW,
+        ROTATION
+    };
+
+    float heightOffset = 0;
+    float height, rotation = 0;
+    float heightSteps, headingSteps, heightStepSetpoint, rotationStepSetpoint = 0;
+    template<typename T>
+    float convertElevatorUnits(T var, stepper_e stepper, conversionName_e convertFrom);
+    
 public:
     Elevator(Stepper &_leadscrewStepper, Stepper &_rotationStepper);
     ~Elevator();
     void setHeight(float height);
+    float &getHeight() { return height; }
     void setRotation(float rotation);
+    float &getRotation() { return rotation; }
+    void update();
+    void periodicUpdate();
 };
 
 

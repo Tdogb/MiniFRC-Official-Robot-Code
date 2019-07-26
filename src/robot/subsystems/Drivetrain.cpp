@@ -11,6 +11,7 @@ Drivetrain::~Drivetrain()
 }
 
 void Drivetrain::update() {
+
 }
 
 void Drivetrain::setVelocityState(drivetrainState_s newState) {

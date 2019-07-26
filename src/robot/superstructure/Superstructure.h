@@ -11,12 +11,6 @@ Supersturcture.setElevatorHeight --> resolve collisions --> run subsystem
 
 class Superstructure
 {
-public:
-    Superstructure(Elevator &_elevator, Drivetrain &_drivetrain, Mechanisms &_mechanisms);
-    void setSuperstructureState(elevatorState_s newElevatorState);
-    void setSuperstructureState(ballState_s newBallState);
-    void setSuperstructureState(hatchState_s newHatchState);
-    void setDrivetrainState(drivetrainState_s newState);
 private:
     Elevator &elevator;
     Drivetrain &drivetrain;
@@ -29,8 +23,14 @@ private:
     void commandElevatorState(elevatorState_s newElevatorState);
     void commandBallState(ballState_s newBallState);
     void commandHatchState(hatchState_s newHatchState);
+    void updateElevatorState(elevatorState_s newElevatorState);
     int convertThetaToSteps(float theta);
-
+public:
+    Superstructure(Elevator &_elevator, Drivetrain &_drivetrain, Mechanisms &_mechanisms);
+    void setSuperstructureState(elevatorState_s newElevatorState);
+    void setSuperstructureState(ballState_s newBallState);
+    void setSuperstructureState(hatchState_s newHatchState);
+    void setDrivetrainState(drivetrainState_s newState);
 };
 
 

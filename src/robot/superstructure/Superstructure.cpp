@@ -3,8 +3,8 @@
 Superstructure::Superstructure(Elevator &_elevator, Drivetrain &_drivetrain, Mechanisms &_mechanisms)
 :elevator(_elevator), drivetrain(_drivetrain), mechanisms(_mechanisms)
 {
-    currentElevatorState.height = 0;
-    currentElevatorState.theta = 0;
+    currentElevatorState.height = elevator.getHeight();
+    currentElevatorState.theta = elevator.getRotation();
     currentBallState.manipulatorState = OFF;
     currentBallState.ballTheta = 0;
     currentHatchState.manipulatorState = OFF;
