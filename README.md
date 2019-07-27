@@ -3,7 +3,7 @@ Runs on Teensy 3.5 microcontroller
 ## Features:
 * Motion profile generation (cubic spline)
 * Pure pursuit tracking algorithm
-* Dynamic realtime 3D superstructure collision detection (TODO: Collision resolution)
+* Dynamic realtime 3D superstructure collision detection
 * Velocity PID controller
 * Memory optimized code
 * Memory optimized schedular
@@ -16,4 +16,5 @@ robotState_s --> Superstructure class --> Subsystem class --> Individual compone
 - **Path follower**: robot/autonomous/follower/Follower.cpp
 - **Schedular**: robot/Schedular.cpp
 ## TODO:
+* Elevator collision resolution
 * Model based feedforward
