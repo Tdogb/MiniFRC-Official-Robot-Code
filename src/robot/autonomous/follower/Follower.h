@@ -1,6 +1,5 @@
 #ifndef __FOLLOWER_H__
 #define __FOLLOWER_H__
-#include "robot/autonomous/Vector2D.h"
 #include <stdint.h>
 #include <Arduino.h>
 #include "robot/defs.h"

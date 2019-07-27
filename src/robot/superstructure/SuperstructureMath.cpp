@@ -1,4 +1,4 @@
-#include "SuperstructureMath.h"
+#include "SuperstructureMath.hpp"
 
 SuperstructureMath::SuperstructureMath()
 {
@@ -7,38 +7,6 @@ SuperstructureMath::SuperstructureMath()
 SuperstructureMath::~SuperstructureMath()
 {
 }
-
-BLA::Matrix<3,3> BallGeometry =
-{
-    -0.064648f,   0.064648f,  0.064648f,
-    0.111350f,   0.060219f,  0.060219f,
-    0.012000f,   0.012000f,  0.030242f
-};
-
-BLA::Matrix<3,2> FloorGeometry =
-{
-    -0.075f,  0.075f,
-    0.085f, -0.085f,
-    0.000f,  0.000f
-};
-
-BLA::Matrix<3,3> axisMat = {
-    0,        0,       0,
-    0.0505,   0.0505,  0.0505,
-    0,        0,       0
-};
-
-BLA::Matrix<3,1> E1 = {
-    1,
-    0,
-    0
-};
-
-BLA::Matrix<3,3> elevatorRotationMat;
-BLA::Matrix<3,3> mechanismRotationMat;
-BLA::Matrix<3,3> tempMatrix;
-BLA::Matrix<3,3> tempMatrix2;
-BLA::Matrix<3,1> tempMatrix3;
 
 void SuperstructureMath::setElevatorHeight(float height) {
     for(int i = 0; i < BallGeometry.GetColCount(); i++) {
@@ -86,6 +54,7 @@ bool SuperstructureMath::calculateMechanismRotation(float theta) {
     tempMatrix += axisMat;
     BallGeometry = tempMatrix;
     printMatrix(&BallGeometry);
+    return true;
 }
 
 void SuperstructureMath::printMatrix(BLA::Matrix<3,3> *mat) {
@@ -101,8 +70,28 @@ void SuperstructureMath::printMatrix(BLA::Matrix<3,3> *mat) {
     Serial.println();
 }
 
-
-void detectCollision() {
-    for(int i = 0; i < BallGeometry.GetRowCount(); i++) {
+/*
+detectCollision should be same formula as hitbox detection in video games
+if the dot product of each?
+*/
+bool SuperstructureMath::detectCollision() {
+    bool collisionHappened[] = {false,false};
+    if(BallGeometry(2,0) + BallGeometry(2,1) + BallGeometry(2,2) <= 0) {
+        //No collision
+        return false;
     }
+    else {
+        for(int i = 0; i < 2; i++) { //Test x and y
+            for(int b = 0; b < 2; b++) {
+                if(contains(BallGeometry(i,0), BallGeometry(i,1), FloorGeometry(i,b))) {
+                    collisionHappened[i] = true;
+                }
+            }
+        }
+    }
+    return collisionHappened[0] && collisionHappened[1];
+}
+
+bool SuperstructureMath::contains(const float &n0, const float &n1, const float &n2) {
+    return n2 >= (n0 > n1 ? n1 : n0) && n2 <= (n0 > n1 ? n0 : n1);
 }
